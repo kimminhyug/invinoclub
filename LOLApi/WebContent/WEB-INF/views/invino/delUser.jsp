@@ -13,12 +13,10 @@ TD,TH {
 </head>
 <body>
 <h2>유저 목록</h2>
-<input type="button" value="기존유저추가" onclick='location.href="userInsert.do"'>
-<input type="button" value="유저관리" onclick='location.href="delUser.do"'>
-<form action="attendanceCheck.do" onsubmit="return updateBeforeCheck();">
-	<input type="submit" value="게임 전적 업데이트" >
-	<input type="date" name="date" id="date" value="" onchange="changeDate(this)">
-	<input type="date" name="date2" id="date2" value="" onchange="changeDate(this)">
+
+<form action="userDelP.do" onsubmit="">
+	<input type="submit" value="일괄 삭제" >
+
 	
 	<table style="border:1px solid #ccc">
 		<colgroup>
@@ -46,6 +44,7 @@ TD,TH {
 							<td>${row.line }</td>
 							<td>${row.authority }</td>
 							<td>${row.playCheck }</td>
+							<td><input type="checkbox" name="delUser" value=${row.name }>삭제</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -60,7 +59,9 @@ TD,TH {
 	</table>
 </form>
 <script>
-
+	function delProc(e) {
+		console.log(e);
+	}
 	function updateBeforeCheck() {
 		var date = document.getElementById('date').value;
 		var date2 = document.getElementById('date2').value;

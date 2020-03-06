@@ -36,9 +36,18 @@ public class ApiDAO extends AbstractDAO{
 		
 	}
 
-	
+	public void insertUser(Map<String, Object> map) {
+		
+		 insert("invino.insertUser",map);
+		
+	}
 	public List<Map<String, Object>> selectIgnoreUserInfo(Map<String, Object> map) {
 		return (List<Map<String, Object>>)selectList("invino.selectIgnoreUserInfo", map); 
+	}
+
+	public void deleteUser(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		delete("invino.deleteUser",map);
 	}
 		
 }

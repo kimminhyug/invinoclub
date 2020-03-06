@@ -60,6 +60,33 @@ public class ApiController {
 	    	
 	    	return mv;
 	    }
+		
+		@RequestMapping(value="/invino/userInsert.do")
+	    public ModelAndView userInsert(Map<String,Object> commandMap) throws Exception{
+	    	ModelAndView mv = new ModelAndView("/invino/insertUser");
+	    	System.out.println("bbb");
+	    	
+	    	return mv;
+	    }
+		@RequestMapping(value="/invino/insertUserProcess.do")
+	    public String insertUserProcess(Map<String,Object> commandMap,@RequestParam(value="name",required=false,defaultValue="") String name,@RequestParam(value="tier",required=false,defaultValue="fail") String tier,@RequestParam(value="line",required=false,defaultValue="") String line,@RequestParam(value="authority",required=false,defaultValue="") String authority) throws Exception{
+	    	ModelAndView mv = new ModelAndView("/invino/user");
+	    	Map<String,Object> map = new HashMap<String, Object>();
+	    	System.out.println(name);
+	    	System.out.println(tier);
+	    	System.out.println(line);
+	    	System.out.println(authority);
+	    	
+	    	map.put("name",name);
+	    	map.put("tier",tier);
+	    	map.put("line",line);
+	    	map.put("authority",authority);
+	    	apiService.insertUser(map);
+	    	return "redirect:user.do";
+
+	    	
+	    }
+		
 		@RequestMapping(value="/invino/user.do")
 	    public ModelAndView NoattendanceCheck(Map<String,Object> commandMap) throws Exception{
 	    	ModelAndView mv = new ModelAndView("/invino/attendanceCheck");
@@ -70,6 +97,33 @@ public class ApiController {
 	    	mv.addObject("list", list);
 	    	
 	    	return mv;
+	    }
+		@RequestMapping(value="/invino/delUser.do")
+	    public ModelAndView userDel(Map<String,Object> commandMap) throws Exception{
+	    	ModelAndView mv = new ModelAndView("/invino/delUser");
+	    	
+	    	
+	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
+
+	    	mv.addObject("list", list);
+	    	
+	    	return mv;
+	    }
+		@RequestMapping(value="/invino/userDelP.do")
+	    public String userDel(Map<String,Object> commandMap,@RequestParam(value="delUser",required=false,defaultValue="") String delUser) throws Exception{
+	    	ModelAndView mv = new ModelAndView("/invino/user");
+	    	System.out.println(delUser);
+	    	String name[] = delUser.split(",");
+	    	
+	    	for(int i=0;i<name.length;i++) {
+	    		Map<String,Object> map = new HashMap<String, Object>();
+	    		map.put("name",name[i]);
+		    	apiService.deleteUser(map);	
+	    	}
+	    	
+	    	
+	    
+	    	return "redirect:user.do";
 	    }
 		@RequestMapping(value="/invino/user.do/riot.txt")
 		@ResponseStatus(HttpStatus.OK)

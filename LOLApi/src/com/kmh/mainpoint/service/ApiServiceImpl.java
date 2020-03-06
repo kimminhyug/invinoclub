@@ -291,6 +291,12 @@ public class ApiServiceImpl implements ApiService{
 			apiDAO.updatecheckPlay(map);
 		}
  	}
+	public void insertUser(Map<String,Object> map){
+			apiDAO.insertUser(map);
+ 	}
+	public void deleteUser(Map<String,Object> map){
+		apiDAO.deleteUser(map);
+	}
 	
 	public static String getWeek(int idx){
 		TimeZone Seoul = TimeZone.getTimeZone("Asia/Seoul");

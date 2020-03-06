@@ -30,6 +30,24 @@
 			   SET U.PLAYCHECK = #{value} 
 			 WHERE U.NAME = #{userName} ]]> 
 	</update>
+	
+	
+	<insert id="insertUser" parameterType="map">
+		<![CDATA[ 
+			INSERT INTO USER(name,line,tier,authority) 
+			   VALUES (
+				   #{name},
+				   #{line},
+				   #{tier},
+				   #{authority} 
+			 )]]> 
+	</insert>
+	<delete id="deleteUser" parameterType="map">
+		<![CDATA[ 
+			DELETE FROM USER
+				    WHERE name = #{name} 
+			 ]]> 
+	</delete>
 
 </mapper>
 

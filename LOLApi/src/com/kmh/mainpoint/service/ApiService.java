@@ -19,6 +19,9 @@ public interface ApiService {
 			throws JSONException, IOException, ParseException;
 
 	List<Map<String, Object>> selectUserInfoIgnoreAfk(Map<String, Object> map) throws Exception;
+
+	void insertUser(Map<String, Object> map);
+	void deleteUser(Map<String, Object> map);
 	
 	
 
