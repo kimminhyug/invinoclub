@@ -66,19 +66,18 @@ public class ApiServiceImpl implements ApiService{
 		year = _date[0];
 		month = _date[1];
 		day = _date[2];
-		System.out.println(_date[0]);
-		System.out.println(_date[1]);
-		System.out.println(_date[2]);
-		System.out.println(date);
+		
 		int weekend = getWeekOfYear(date);
-		if(type.equals("monday")) {
-			week = getMonday(getSunday2(year,month,weekend));
+		if(type.equals("w")) {
+			week = getcal(year,month,day);
 			week = week + " 00:00:01";
+			System.out.println("월"+week);
 		} else {
-			week = getSunday(year,month,weekend);
+			week = getcal(year,month,day);
 			week = week + " 23:59:59";
+			System.out.println("일"+week);
 		}
-		System.out.println(week);
+		
 
 
 		Date nowTime1 = dateFormat.parse(week);
@@ -121,20 +120,20 @@ public class ApiServiceImpl implements ApiService{
 
 		String play = "";
 		
-		System.out.println(list.size());
-		String date = map.get("date").toString();
 		
+		String date = map.get("date").toString();
+		String date2 = map.get("date2").toString();
 
 		for(int i=0;i<=list.size()-1;i++) { //Ŭ���� �Ѹ��Ѹ�üũ
 			try {
 				continueCheck = false;
-				System.out.println(list.get(i));
-				String user = (list.get(i).get("name")).toString();
-				System.out.println(list);
 				
-				long unixMonday = dateCtrl(date,"monday");
-				long unixSunday = dateCtrl(date,"sunday");
-				System.out.println(list.get(i));
+				String user = (list.get(i).get("name")).toString();
+				
+				
+				long unixMonday = dateCtrl(date,"w");
+				long unixSunday = dateCtrl(date2,"");
+				
 				String uaccountID = (list.get(i).get("accountId")).toString();
 				
 				String accountId = null;
@@ -318,21 +317,19 @@ public class ApiServiceImpl implements ApiService{
  	}
 
 
-	public static String getMonday(String yyyy,String mm, int day){
+	public static String getcal(String yyyy,String mm, String day){
  		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd",Locale.KOREA);
  		TimeZone Seoul = TimeZone.getTimeZone("Asia/Seoul");
  		Calendar c = Calendar.getInstance(Seoul);
  		
  		int y=Integer.parseInt(yyyy);
  		int m=Integer.parseInt(mm);
+ 		int d=Integer.parseInt(day);
  		c.set(Calendar.YEAR,y);
- 		c.set(Calendar.MONTH,m);
- 		c.set(Calendar.DAY_OF_MONTH,day);
+ 		c.set(Calendar.MONTH,m-1);
+ 		c.set(Calendar.DAY_OF_MONTH,d);
  		System.out.println(day);
-// 		int wk = Integer.parseInt(getWeek(day));
- 		
- 		
- 		c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+
  		System.out.println(c);
  		System.out.println("BBBBBB");
  		System.out.println(c.getTime());

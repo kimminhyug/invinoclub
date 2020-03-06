@@ -16,7 +16,8 @@ TD,TH {
 <input type="button" value="기존유저추가" onclick='location.href="user.do"'>
 <form action="attendanceCheck.do" onsubmit="return updateBeforeCheck();">
 	<input type="submit" value="게임 전적 업데이트" >
-	<input type="date" name="date" id="date" value="">
+	<input type="date" name="date" id="date" value="" onchange="changeDate(this)">
+	<input type="date" name="date2" id="date2" value="" onchange="changeDate(this)">
 	
 	<table style="border:1px solid #ccc">
 		<colgroup>
@@ -60,11 +61,46 @@ TD,TH {
 <script>
 	function updateBeforeCheck() {
 		var date = document.getElementById('date').value;
+		var date2 = document.getElementById('date2').value;
+		var bool = false;
 		if(date == null || date == "") {
-			alert('날짜 미입력');
+			bool = true;
+		}
+		if(date2 == null || date2 == "") {
+			bool = true;
+		}
+		if(bool == true) {
+			alert("You can only use it every seven days");
 			return false;
 		}
-	
+	}
+	function changeDate(e) {
+		
+		var date = document.getElementById('date');
+		var date2 = document.getElementById('date2');
+		var getDateValue;
+		if(e.id == "date") {
+			getDateValue = getDATE(e.value,6);
+			var m =((getDateValue.getMonth() + '').length == 1)?0+(getDateValue.getMonth() +1+ ''):(getDateValue.getMonth() +1+ '');
+			var d =((getDateValue.getDate() + '').length == 1)?0+(getDateValue.getDate() + ''):(getDateValue.getDate() + '');
+			date2.value = getDateValue.getFullYear()+"-"+m+"-"+d;
+		} else if(e.date == "date2") {
+			getDateValue = getDATE(e.value,-6);
+			var m =((getDateValue.getMonth() + '').length == 1)?0+(getDateValue.getMonth() +1+ ''):(getDateValue.getMonth() +1+ '');
+			var d =((getDateValue.getDate() + '').length == 1)?0+(getDateValue.getDate() + ''):(getDateValue.getDate() + '');
+			date.value = getDateValue.getFullYear()+"-"+m+"-"+d;
+		}
+	}
+	function getDATE(date,calc) {
+		var yyyy = date.split("-")[0];
+	    var mm = date.split("-")[1];
+	    var dd = date.split("-")[2];
+	    calc = calc*1;
+	    dd = dd*1;
+	    dd = dd+calc;
+	    var _date = new Date(yyyy, mm-1, dd);
+	    console.log(_date);
+		return _date;
 	}
 </script>
 </body>

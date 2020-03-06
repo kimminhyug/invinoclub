@@ -40,13 +40,14 @@ public class ApiController {
 	    }
 
 		@RequestMapping(value="/invino/attendanceCheck.do")
-	    public ModelAndView attendanceCheck(Map<String,Object> commandMap,@RequestParam(value="date",required=false,defaultValue="fail") String date) throws Exception{
+	    public ModelAndView attendanceCheck(Map<String,Object> commandMap,@RequestParam(value="date",required=false,defaultValue="fail") String date,@RequestParam(value="date2",required=false,defaultValue="fail") String date2) throws Exception{
 	    	ModelAndView mv = new ModelAndView("/invino/attendanceCheck");
 	    	System.out.println(date);
 	    	Map<String,Object> map = new HashMap<String, Object>();
 
 
 	    	map.put("date",date);
+	    	map.put("date2",date2);
 	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
 	    	
 	    	List<Map<String,Object>> Ignorelist = apiService.selectUserInfoIgnoreAfk(commandMap);
@@ -70,7 +71,7 @@ public class ApiController {
 	    	
 	    	return mv;
 	    }
-		@RequestMapping(value="/invino/riot.txt")
+		@RequestMapping(value="/invino/user.do/riot.txt")
 		@ResponseStatus(HttpStatus.OK)
 	    public void riot(HttpServletRequest req, HttpServletResponse res) throws Exception{
 			String href = req.getSession().getServletContext().getRealPath("/");
