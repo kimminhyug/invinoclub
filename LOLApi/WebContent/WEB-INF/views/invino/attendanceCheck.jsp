@@ -5,11 +5,16 @@
 <title>first</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<STYLE>
+TD,TH {
+	text-align : center;
+}
+</STYLE>
 </head>
 <body>
 <h2>유저 목록</h2>
+<input type="button" value="기존유저추가" onclick='location.href="user.do"'>
 <form action="attendanceCheck.do" onsubmit="return updateBeforeCheck();">
-	
 	<input type="submit" value="게임 전적 업데이트" >
 	<input type="date" name="date" id="date" value="">
 	
