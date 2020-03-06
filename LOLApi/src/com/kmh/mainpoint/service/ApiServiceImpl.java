@@ -156,7 +156,7 @@ public class ApiServiceImpl implements ApiService{
 					continueCheck = true;
 					errorCode = matchsInfo.get("checkSuccess").toString();
 					if(errorCode.equals("404")) {
-						errMsg = "닉네임 확인필요";
+						errMsg = "닉네임 확인필요 또는 게임기록없음";
 					} else if(errorCode.equals("500")) {
 						errMsg = "서버 에러(limit초과 또는 로직에러)";
 					} else {
