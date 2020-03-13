@@ -22,6 +22,8 @@ public interface ApiService {
 
 	void insertUser(Map<String, Object> map);
 	void deleteUser(Map<String, Object> map);
+
+	void updateUserSearchDate(Map<String, Object> map);
 	
 	
 

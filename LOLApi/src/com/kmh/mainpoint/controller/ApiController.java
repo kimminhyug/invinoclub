@@ -45,9 +45,10 @@ public class ApiController {
 	    	System.out.println(date);
 	    	Map<String,Object> map = new HashMap<String, Object>();
 
-
+	    	
 	    	map.put("date",date);
 	    	map.put("date2",date2);
+	    	apiService.updateUserSearchDate(commandMap);
 	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
 	    	
 	    	List<Map<String,Object>> Ignorelist = apiService.selectUserInfoIgnoreAfk(commandMap);
@@ -93,7 +94,7 @@ public class ApiController {
 	    	System.out.println("bbb");
 	    	
 	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
-
+	    	System.out.println(list);
 	    	mv.addObject("list", list);
 	    	
 	    	return mv;

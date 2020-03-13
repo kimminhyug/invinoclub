@@ -34,6 +34,7 @@ TD,TH {
 				<th scope="col">라인</th>
 				<th scope="col">직책</th>
 				<th scope="col">저번주 클럽원과 게임체크</th>
+				<th scope="col">갱신 날짜</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -46,6 +47,7 @@ TD,TH {
 							<td>${row.line }</td>
 							<td>${row.authority }</td>
 							<td>${row.playCheck }</td>
+							<td>${row.SEARCH_DATE }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

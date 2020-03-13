@@ -85,7 +85,14 @@ public class ApiServiceImpl implements ApiService{
 		
 		return unixday;
 	}
-
+	@Override
+	public void updateUserSearchDate(Map<String, Object> map) {
+		String regDate = map.get("date") + " - " + map.get("date2");
+		HashMap<String, String> _map = new HashMap<>();
+		_map.put("regDatte", regDate);
+		apiDAO.updateUserSearchDate(_map);
+	}
+	
 	@Override
 	public List<Map<String, Object>> attendanceCheckUser(List<Map<String, Object>> list,Map<String, Object> map) throws JSONException, IOException, ParseException, InterruptedException {
 		

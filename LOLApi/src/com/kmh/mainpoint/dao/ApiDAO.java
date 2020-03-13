@@ -49,5 +49,10 @@ public class ApiDAO extends AbstractDAO{
 		// TODO Auto-generated method stub
 		delete("invino.deleteUser",map);
 	}
+
+	public void updateUserSearchDate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		update("invino.updateUserSearchDate",map);
+	}
 		
 }

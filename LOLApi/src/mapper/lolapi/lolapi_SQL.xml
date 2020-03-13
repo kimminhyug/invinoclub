@@ -8,12 +8,12 @@
   	</select>
   
 	<select id="selectUserInfo" parameterType="hashmap" resultType="hashmap">
-		SELECT * 
-		  FROM USER
+		SELECT U.*,(SELECT CASE WHEN C.value = "" THEN "NO DATE DATA" END FROM COMMON C WHERE C.usarge = "REG_DATE") AS SEARCH_DATE
+		  FROM USER U
   	</select>
   	
 	<select id="selectIgnoreUserInfo" parameterType="hashmap" resultType="hashmap">
-		SELECT U.* 
+		SELECT U.*
 		  FROM USER U
 		 WHERE U.AFK IS NULL
   	</select>
@@ -29,6 +29,12 @@
 			UPDATE USER U 
 			   SET U.PLAYCHECK = #{value} 
 			 WHERE U.NAME = #{userName} ]]> 
+	</update>
+	<update id="updateUserSearchDate" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE COMMON C
+			   SET C.value = #{regDate} 
+			 WHERE C.usarge = 'REG_DATE' ]]> 
 	</update>
 	
 	
@@ -48,6 +54,8 @@
 				    WHERE name = #{name} 
 			 ]]> 
 	</delete>
+	
+	
 
 </mapper>
 
