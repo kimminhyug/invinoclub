@@ -8,7 +8,7 @@
   	</select>
   
 	<select id="selectUserInfo" parameterType="hashmap" resultType="hashmap">
-		SELECT U.*,(SELECT CASE WHEN C.value = "" THEN "NO DATE DATA" END FROM COMMON C WHERE C.usarge = "REG_DATE") AS SEARCH_DATE
+		SELECT U.*,(SELECT CASE WHEN C.value = "" THEN "NO DATE DATA" END FROM COMMON C WHERE C.usarge = "SEARCH_DATE") AS SEARCH_DATE
 		  FROM USER U
   	</select>
   	
