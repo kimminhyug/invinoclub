@@ -89,7 +89,7 @@ public class ApiServiceImpl implements ApiService{
 	public void updateUserSearchDate(Map<String, Object> map) {
 		String regDate = map.get("date") + " - " + map.get("date2");
 		HashMap<String, String> _map = new HashMap<>();
-		_map.put("regDatte", regDate);
+		_map.put("regDate", regDate);
 		apiDAO.updateUserSearchDate(_map);
 	}
 	

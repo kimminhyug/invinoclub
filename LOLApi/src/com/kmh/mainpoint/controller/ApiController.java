@@ -48,7 +48,7 @@ public class ApiController {
 	    	
 	    	map.put("date",date);
 	    	map.put("date2",date2);
-	    	apiService.updateUserSearchDate(commandMap);
+	    	apiService.updateUserSearchDate(map);
 	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
 	    	
 	    	List<Map<String,Object>> Ignorelist = apiService.selectUserInfoIgnoreAfk(commandMap);
