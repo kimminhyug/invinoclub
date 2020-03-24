@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="invino">
+	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
+		SELECT * 
+		  FROM BOARD
+  	</select>
+  
+	<select id="selectUserInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT U.*,
+		 	  (SELECT CASE WHEN C.value = "" THEN "NO DATE DATA" ELSE C.VALUE END FROM COMMON C WHERE C.usarge = "REG_DATE") AS SEARCH_DATE
+		  FROM USER U
+  	</select>
+  	
+	<select id="selectIgnoreUserInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT U.*
+		  FROM USER U
+		 WHERE U.AFK IS NULL
+  	</select>
+	<select id="selectUserInfoIgnoreAfkTFT" parameterType="hashmap" resultType="hashmap">
+		SELECT U.name,U.PUUID
+		  FROM USER U
+		 WHERE U.AFK IS NULL
+		   AND U.playCheck != 'play' OR U.playCheck IS NULL
+		   
+		   
+  	</select>
+  	
+	<update id="updateAccountId" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE USER U 
+			   SET U.ACCOUNTID = #{value} 
+			 WHERE U.NAME = #{userName} ]]> 
+	</update>
+	
+	<update id="updatecheckPlay" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE USER U 
+			   SET U.PLAYCHECK = #{value} 
+			 WHERE U.NAME = #{userName} ]]> 
+	</update>
+	<update id="updateUserSearchDate" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE COMMON C
+			   SET C.value = #{regDate} 
+			 WHERE C.usarge = 'REG_DATE' ]]> 
+	</update>
+	<update id="updatePuuId" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE USER U 
+			   SET U.PUUID = #{value} 
+			 WHERE U.NAME = #{userName} ]]> 
+	</update>
+	
+	
+	<insert id="insertUser" parameterType="map">
+		<![CDATA[ 
+			INSERT INTO USER(name,line,tier,authority) 
+			   VALUES (
+				   #{name},
+				   #{line},
+				   #{tier},
+				   #{authority} 
+			 )]]> 
+	</insert>
+	<delete id="deleteUser" parameterType="map">
+		<![CDATA[ 
+			DELETE FROM USER
+				    WHERE name = #{name} 
+			 ]]> 
+	</delete>
+	
+	
+
+</mapper>
+
