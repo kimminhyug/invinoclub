@@ -406,6 +406,7 @@ public class ApiServiceImpl implements ApiService{
 		
 		map.put("value", value);
 		map.put("userName", userName);
+		System.out.println(userName);
 		if(col.equals("accountId")) {
 			apiDAO.updateAccountId(map);
 		}
