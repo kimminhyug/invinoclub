@@ -58,9 +58,19 @@ CREATE TABLE `USER` (
   `afk` char(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `joindate` date DEFAULT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=s;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+CREATE TABLE GAMEMATCH(
+				IDX int(255) AUTO_INCREMENT,
+				PLAYER_NAME char(30),
+				MATCHID char(50),
+				PARAM_BEGINTIME char(30),
+				PARAM_ENDTIME char(30),
+				GAMEDATE char(40),
+				REGDATE char(40),
+				URL varchar(300),
+				PRIMARY KEY(IDX)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 --
 -- Dumping data for table `USER`
 --

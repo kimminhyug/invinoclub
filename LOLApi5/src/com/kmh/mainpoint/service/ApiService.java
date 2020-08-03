@@ -19,18 +19,23 @@ public interface ApiService {
 			throws JSONException, IOException, ParseException;
 
 	List<Map<String, Object>> selectUserInfoIgnoreAfk(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectUserGameDate(Map<String, Object> map) throws Exception;
 
 	void insertUser(Map<String, Object> map);
 	void deleteUser(Map<String, Object> map);
 
 	void updateUserSearchDate(Map<String, Object> map);
-
+	void updateUserPlayCheck();
+	void userGameData(Map<String, Object> map) throws JSONException, IOException;
+	
 	List<Map<String, Object>> GetUserPuuId(List<Map<String, Object>> list)
 			throws JSONException, IOException, ParseException;
 
 	void checkTFTPlay(List<Map<String, Object>> ignorelist,List<Map<String, Object>> clubMember, Map<String, Object> map) throws InterruptedException,IOException, ParseException;
 
 	List<Map<String, Object>> selectUserInfoIgnoreAfkTFT(Map<String, Object> commandMap);
+
+	void userGameData();
 	
 	
 

@@ -6,6 +6,16 @@
 		
 		<property name="username" value="kimminhyug"/>
 		<property name="password" value="1234"/>
+		<!-- 특정 시간마다 validationQuery를 실행 셋팅 시작 -->
+
+        <property name="validationQuery" value="select 1"/>
+
+        <property name="testWhileIdle" value="true"/>
+
+        <property name="timeBetweenEvictionRunsMillis" value="7200000"/>
+
+        <!-- 특정 시간마다 validationQuery를 실행 셋팅 끝 -->
 	</bean>
 </beans>
 
+ 	

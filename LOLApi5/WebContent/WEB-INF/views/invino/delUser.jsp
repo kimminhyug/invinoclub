@@ -8,6 +8,7 @@
 <STYLE>
 TD,TH {
 	text-align : center;
+	border : 1px solid black;
 }
 </STYLE>
 </head>
@@ -44,7 +45,7 @@ TD,TH {
 							<td>${row.line }</td>
 							<td>${row.authority }</td>
 							<td>${row.playCheck }</td>
-							<td><input type="checkbox" name="delUser" value=${row.name }>삭제</td>
+							<td><input type="checkbox" name="delUser" value="${row.name }">삭제</td>
 						</tr>
 					</c:forEach>
 				</c:when>

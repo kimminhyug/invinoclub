@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -69,22 +70,16 @@ public class userInfoAPI {
 			  Id=Id.replace("+", "");
 
 
-			    System.out.println("https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/"
-						  +Id
-						  +"/ids?count=1000"
-						  +"&api_key="
-						  +apiKey);
-
+			    
 			  
 				JSONArray json = null;
 				    json = readJsonArrFromUrl("https://asia.api.riotgames.com/tft/match/v1/matches/by-puuid/"
 							  +Id
-							  +"/ids?count=1000"
+							  +"/ids?count=50"
 							  +"&api_key="
 							  +apiKey
 							  );
 
-				System.out.println(json);
 
 			    
 			  return json;
@@ -115,7 +110,7 @@ public class userInfoAPI {
 			  String endTimeText = "";
 			  
 			  JSONObject json = new JSONObject();
-			  System.out.println(22222);
+			  
 			  if(beginTime != 0) {
 				  beginTimeText = "&beginTime="+beginTime;
 			  }
@@ -131,7 +126,7 @@ public class userInfoAPI {
 			  int responseCode = con.getResponseCode();
 		
 
-			  System.out.print("responseCode="+responseCode);
+			  
 			  
 		      if(responseCode==200) { // ���� ȣ��
 		    	   json = readJsonFromUrl("https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
@@ -142,11 +137,7 @@ public class userInfoAPI {
 		    	   json.put("checkSuccess","success");
 		    	   
 		      } else {  // ���� �߻�\
-				  System.out.println("https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
-						  +accountId
-						  +endTimeText
-						  +beginTimeText												  
-						  +"&api_key=" +apiKey);
+				
 		    	  json.put("checkSuccess",responseCode);
 		    	  
 		    	 
@@ -154,13 +145,7 @@ public class userInfoAPI {
 			  
 			  
 			  
-				  System.out.println("https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
-						  +accountId
-						  +endTimeText
-						  +beginTimeText												  
-						  +"&api_key=" +apiKey);
-
-				  
+			
 			  return json;
 		  }
 		  public static JSONObject getUserMatchDetail(String matchId,String apiKey) throws IOException, JSONException {
@@ -176,10 +161,7 @@ public class userInfoAPI {
 		    JSONObject json = readJsonFromUrl("https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/%EC%97%AC%ED%96%89%EB%96%A0%EB%82%98%EB%8A%94%EB%B0%94%EB%93%9C%EC%B0%A1?api_key=RGAPI-324d1cb3-959a-445e-aaf5-bf488ebe7cff");
 		    String lolId  = "���ධ���¹ٵ���";
 		    String encodedId = URLEncoder.encode(lolId, "UTF-8");
-		    System.out.println(encodedId);
-		    System.out.println(json.toString());
-		    System.out.println(json.get("id"));
-		    System.out.println(json.get("name"));
+
 		    
 		    
 
@@ -204,6 +186,46 @@ public class userInfoAPI {
 				json.put("checkSuccess",responseCode);
 			}
 			    
+			  return json;
+		}
+
+		public static JSONObject getUserMatchInfo(String accountId, String apiKey, long unixday) throws JSONException, IOException {
+			  String beginTimeText = "";
+			  String endTimeText = "";
+			  
+			  JSONObject json = new JSONObject();
+			  
+			  if(unixday != 0) {
+				  beginTimeText = "&beginTime="+unixday;
+			  }
+
+			  URL url = new URL("https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
+					  +accountId
+					  +beginTimeText												  
+					  +"&api_key=" +apiKey);
+			  javax.net.ssl.HttpsURLConnection con = (javax.net.ssl.HttpsURLConnection)url.openConnection();
+			  int responseCode = con.getResponseCode();
+		
+
+			  
+			  
+		      if(responseCode==200) { // ���� ȣ��
+		    	   json = readJsonFromUrl("https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
+						  +accountId
+						  +beginTimeText												  
+						  +"&api_key=" +apiKey);
+		    	   json.put("checkSuccess","success");
+		    	   
+		      } else {  // ���� �߻�\
+				
+		    	  json.put("checkSuccess",responseCode);
+		    	  
+		    	 
+		      }
+			  
+			  
+			  
+			
 			  return json;
 		}
 }

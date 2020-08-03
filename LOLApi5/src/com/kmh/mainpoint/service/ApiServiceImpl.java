@@ -76,11 +76,11 @@ public class ApiServiceImpl implements ApiService{
 		if(type.equals("w")) {
 			week = getcal(year,month,day);
 			week = week + " 00:00:01";
-			System.out.println("월"+week);
+
 		} else {
 			week = getcal(year,month,day);
-			week = week + " 23:59:59";
-			System.out.println("일"+week);
+			week = week + " 23:50:00";
+
 		}
 		
 
@@ -118,7 +118,7 @@ public class ApiServiceImpl implements ApiService{
 
 		for(int i=0;i<=list.size()-1;i++) { //Ŭ���� �Ѹ��Ѹ�üũ
 			try {
-				System.out.println("i "+i);
+
 				continueCheck = false;
 				String user = (list.get(i).get("name")).toString();
 				String puuid = (list.get(i).get("PUUID")).toString();
@@ -127,25 +127,25 @@ public class ApiServiceImpl implements ApiService{
 				
 				info = userInfoAPI.getUserTFTInfo(puuid,ApiKey);
 				apiIOCount = apiIOCount + 1;
-				if(apiIOCount >= 20) {
+				if(apiIOCount >= 18) {
 					apiIOCount = 0;
 					String a = apiDAO.select1();
-					Thread.sleep(120000);
+					Thread.sleep(140000);
 				}
 
 				
 				//get match id(array)
 				for(int j=info.length()-1;j>=0;j--) {
-					System.out.println("j "+j);
+
 					continueCheck = false;
 					String matchId = (info.get(j)).toString();
 					
 					matchInfo = userInfoAPI.getUserTFTMatchInfo(matchId,ApiKey);
 					apiIOCount = apiIOCount + 1;
-					if(apiIOCount >= 20) {
+					if(apiIOCount >= 18) {
 						apiIOCount = 0;
 						String a = apiDAO.select1();
-						Thread.sleep(120000);
+						Thread.sleep(140000);
 					}
 					JSONObject gameDateArr =   matchInfo.getJSONObject("info");
 					
@@ -164,13 +164,9 @@ public class ApiServiceImpl implements ApiService{
 					if(check2 > 0 ) {
 						break;
 					}
-					System.out.println("pass");
-					
-//					JSONObject matchDetail = userInfoAPI.getUserMatchDetail((matchsInfo.getJSONArray("matches").getJSONObject(currentMatchIndex).get("gameId")).toString(),ApiKey);
-					
+	
 					int currentUserIdx = 0;
 					do {
-						System.out.println("do ");
 						JSONObject matchObject = (JSONObject) matchInfo.get("metadata");
 						
 						if(!matchInfo.get("checkSuccess").toString().equals("success")) {
@@ -184,7 +180,7 @@ public class ApiServiceImpl implements ApiService{
 							} else {
 								errMsg = "민트초코먹고싶다 " +errorCode;
 							}
-							valueUpdate(errMsg,user,"checkPlay");
+							valueUpdate(errMsg+" errcode : " + errorCode,user,"checkPlay");
 							break;
 						}
 					
@@ -199,11 +195,9 @@ public class ApiServiceImpl implements ApiService{
 						
 						
 						for(int c=0;c<club.size();c++) {
-							System.out.println("c "+c);
-							System.out.println(club);
+
 							String clubMember = (club.get(c).get("PUUID")).toString();
-							System.out.println(user + "         " +puuid);
-							System.out.println(matchUser +" "+ clubMember );
+
 							if( matchUser.equals(clubMember) && !(matchUser.equals(puuid))) {
 								System.out.println(user + "         " +puuid);
 								System.out.println(matchUser +" "+ clubMember );
@@ -234,10 +228,10 @@ public class ApiServiceImpl implements ApiService{
 		String errorCode = "";
 		boolean continueCheck;
 		apiIOCount = apiIOCount + 1;
-		if(apiIOCount >= 20) {
+		if(apiIOCount >= 490) {
 			apiIOCount = 0;
 			String a = apiDAO.select1();
-			Thread.sleep(120000);
+			Thread.sleep(140000);
 		}
 
 		
@@ -270,9 +264,9 @@ public class ApiServiceImpl implements ApiService{
 				JSONObject info = null;
 				info = userInfoAPI.getUserInfo(user,ApiKey);
 				apiIOCount = apiIOCount + 1;
-				if(apiIOCount >= 20) {
+				if(apiIOCount >= 490) {
 					apiIOCount = 0;
-					Thread.sleep(120000);
+					Thread.sleep(140000);
 					System.out.println("�޽���");
 				}
 				accountId = (info.get("accountId")).toString();
@@ -289,16 +283,16 @@ public class ApiServiceImpl implements ApiService{
 					} else {
 						errMsg = "민트초코먹고싶다 " +errorCode;
 					}
-					valueUpdate(errMsg,user,"checkPlay");
+					valueUpdate(errMsg+" errcode : " + errorCode,user,"checkPlay");
 					continue;
 				}
 				if(continueCheck == true) {
 					continue;
 				}
 				apiIOCount = apiIOCount + 1;
-				if(apiIOCount >= 20) {
+				if(apiIOCount >= 490) {
 					apiIOCount = 0;
-					Thread.sleep(120000);
+					Thread.sleep(140000);
 					System.out.println("�޽���");
 				}
 				
@@ -317,9 +311,9 @@ public class ApiServiceImpl implements ApiService{
 					currentMatchIndex = currentMatchIndex + 1;
 					JSONObject matchDetail = userInfoAPI.getUserMatchDetail((matchsInfo.getJSONArray("matches").getJSONObject(currentMatchIndex).get("gameId")).toString(),ApiKey);
 					apiIOCount = apiIOCount + 1;
-					if(apiIOCount >= 20) {
+					if(apiIOCount >= 490) {
 						apiIOCount = 0;
-						Thread.sleep(120000);
+						Thread.sleep(140000);
 						System.out.println("�޽���");
 					}
 					
@@ -327,34 +321,22 @@ public class ApiServiceImpl implements ApiService{
 					JSONArray matchDetailPlayer = matchDetail.getJSONArray("participantIdentities");
 					String gameid = matchDetail.get("gameId").toString();
 	
-	
-			
+					System.out.println(user);
+					
 					
 					for(int j=0;j<=matchDetailPlayer.length()-1;j++) { //�ش� ��ġ ���� ���̵� �ϳ��� �̱�
-	//					System.out.println(matchDetailPlayer);
-	//					System.out.println(matchDetailPlayer.length());
-//						System.out.println((JSONObject) matchDetailPlayer.get(0));
+
 						JSONObject playerInfos = (JSONObject) matchDetailPlayer.get(j);
 						JSONObject playerInfo = playerInfos.getJSONObject("player");
 						String teamAccountId = playerInfo.get("accountId").toString();
 						
 	
 						for(int k=0;k<=list.size()-1;k++) {//Ŭ���� �������̵� �ϳ��ϳ� �̾ư��� �ش��ġ�ο��� ��
-	
-	//						System.out.println(k);
-	//						
-	//						System.out.println(user+" ���ΰ� "+playerInfo.get("summonerName").toString()+"  "+ playerInfo.get("accountId").toString());
-	//						System.out.println(list.get(k).get("name").toString() +" "+list.get(k).get("accountId").toString() );
-	//						
-							
-							
+							System.out.println(list.get(k));
 							if(teamAccountId.equals(list.get(k).get("accountId").toString())) {
 								if(uaccountID.equals(teamAccountId)) {
-									
 								} else {
 									play = "play";
-									//play = teamAccountId + "   " + list.get(k).get("accountId").toString();
-									System.out.println("171wnf");
 									break;	
 								}
 								
@@ -365,14 +347,6 @@ public class ApiServiceImpl implements ApiService{
 					}
 					
 				}   while(play == "");
-	
-	
-	
-			
-	
-				
-	//			System.out.print(play+"  ");
-	//			System.out.println(user);
 				valueUpdate(play,user,"checkPlay");
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
@@ -451,6 +425,7 @@ public class ApiServiceImpl implements ApiService{
 	}
 	
 	public void deleteUser(Map<String,Object> map){
+		System.out.println(map);
 		apiDAO.deleteUser(map);
 	}
 	
@@ -490,20 +465,14 @@ public class ApiServiceImpl implements ApiService{
  		c.set(Calendar.YEAR,y);
  		c.set(Calendar.MONTH,m-1);
  		c.set(Calendar.DAY_OF_MONTH,d);
- 		System.out.println(day);
 
- 		System.out.println(c);
- 		System.out.println("BBBBBB");
- 		System.out.println(c.getTime());
  		return formatter.format(c.getTime());
  	}
 	public static String getMonday(Calendar c){
  		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd",Locale.KOREA);
  		int day = c.get(Calendar.DATE);
  		c.set(Calendar.DATE,day-6);
- 		
- 		System.out.println("BBBBBBBBBB");
- 		System.out.println(c);
+
  		return formatter.format(c.getTime());
  	}
 
@@ -520,8 +489,7 @@ public class ApiServiceImpl implements ApiService{
  		c.set(Calendar.MONTH,m);
  		c.set(Calendar.DAY_OF_MONTH,day);
  		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
- 		System.out.println("aaaaaaa");
- 		System.out.println(c.getTime());
+
  		return formatter.format(c.getTime());
  	}
 
@@ -538,8 +506,7 @@ public class ApiServiceImpl implements ApiService{
  		c.set(Calendar.MONTH,m);
  		c.set(Calendar.DAY_OF_MONTH,day);
  		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
- 		System.out.println("aaaaaaa");
- 		System.out.println(c.getTime());
+
  		return c;
  	}
 
@@ -591,8 +558,87 @@ public class ApiServiceImpl implements ApiService{
 		  return  compare;
 		
 	}
+	@Override
+	public void updateUserPlayCheck() {
+		// TODO Auto-generated method stub
+		apiDAO.updateUserPlayCheck();
+	}
+	@Override
+	public void userGameData(Map<String, Object> map) throws JSONException, IOException, InterruptedException {
+		// TODO Auto-generated method stub
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREA);
+		Date nowTime1 =  new Date();
+		long unixday = nowTime1.getTime();
+		String ApiKey = apiDAO.selectTFTApiKey();
+		System.out.println(unixday);
+		
+		String accountId = null;
+		
+		
+		JSONObject matchsInfo = null;
+		JSONObject info = null;
+		String user = (String) map.get("user");
+		info = userInfoAPI.getUserInfo(user,ApiKey);
+		apiIOCount = apiIOCount + 1;
+		if(apiIOCount >= 2000) {
+			apiIOCount = 0;
+			Thread.sleep(140000);
+			System.out.println("�޽���");
+		}
+		accountId = (info.get("accountId")).toString();
+		matchsInfo = userInfoAPI.getUserMatchInfo(accountId,ApiKey,unixday); 		
+//		apiDAO.userGameData(map);
+		int matchTotalCount = matchsInfo.getJSONArray("matches").length();
+		int currentMatchIndex = -1; //�Ѹ�ġ�����Ϳ��� ��ġ���� �ϳ��� �E�� �� ����
+	
+			
+			if(currentMatchIndex == matchTotalCount-1) { //��ġ���� ��ȸ�� ������ ����
+				
+				break;
+			}
+			currentMatchIndex = currentMatchIndex + 1;
+			JSONObject matchDetail = userInfoAPI.getUserMatchDetail((matchsInfo.getJSONArray("matches").getJSONObject(currentMatchIndex).get("gameId")).toString(),ApiKey);
+			apiIOCount = apiIOCount + 1;
+			if(apiIOCount >= 2000) {
+				apiIOCount = 0;
+				Thread.sleep(140000);
+				System.out.println("�޽���");
+			}
+			
+			
+			JSONArray matchDetailPlayer = matchDetail.getJSONArray("participantIdentities");
+			String gameid = matchDetail.get("gameId").toString();
 
-		   
+
+	
+			
+			for(int j=0;j<=matchDetailPlayer.length()-1;j++) { //�ش� ��ġ ���� ���̵� �ϳ��� �̱�
+
+				JSONObject playerInfos = (JSONObject) matchDetailPlayer.get(j);
+				JSONObject playerInfo = playerInfos.getJSONObject("player");
+				String teamAccountId = playerInfo.get("accountId").toString();
+				
+
+			
+				
+			}
+			
+		
+	
+		
+	}
+	@Override
+	public List<Map<String, Object>> selectUserGameDate(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void userGameData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 

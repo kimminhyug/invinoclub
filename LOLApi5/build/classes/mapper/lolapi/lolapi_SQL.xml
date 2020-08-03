@@ -17,6 +17,7 @@
 		SELECT U.*
 		  FROM USER U
 		 WHERE U.AFK IS NULL
+		   AND U.playCheck IS NULL
   	</select>
 	<select id="selectUserInfoIgnoreAfkTFT" parameterType="hashmap" resultType="hashmap">
 		SELECT U.name,U.PUUID
@@ -34,6 +35,11 @@
 			 WHERE U.NAME = #{userName} ]]> 
 	</update>
 	
+	<update id="updateUserPlayCheck" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE USER U 
+			   SET U.PLAYCHECK = null ]]> 
+	</update>
 	<update id="updatecheckPlay" parameterType="hashmap">
 		<![CDATA[ 
 			UPDATE USER U 
@@ -52,6 +58,19 @@
 			   SET U.PUUID = #{value} 
 			 WHERE U.NAME = #{userName} ]]> 
 	</update>
+	<insert id="userGameData" parameterType="hashmap">
+		<![CDATA[ 
+			INSERT INTO GAMEMATCH(PLAYER_NAME,MATCHID,PARAM_BEGINTIME,PARAM_ENDTIME,MATCHDATE,REG_DATE,URL) 
+			   VALUES (
+				   #{PLAYER_NAME},
+				   #{MATCHID},
+				   #{PARAM_BEGINTIME},
+				   #{PARAM_ENDTIME},
+				   #{MATCHDATE},
+				   #{REG_DATE}, 
+				   #{URL} 
+		]]> 
+	</insert>
 	
 	
 	<insert id="insertUser" parameterType="map">

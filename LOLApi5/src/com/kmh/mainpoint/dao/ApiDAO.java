@@ -54,7 +54,12 @@ public class ApiDAO extends AbstractDAO{
 		// TODO Auto-generated method stub
 		update("invino.updateUserSearchDate",map);
 	}
-
+	public void updateUserPlayCheck() {
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = null;
+		update("invino.updateUserPlayCheck", map);
+	}
+	
 	public String selectTFTApiKey() {
 		// TODO Auto-generated method stub
 		return (String) selectOne("invino_lolapi.selectTFTApiKey");
@@ -65,6 +70,12 @@ public class ApiDAO extends AbstractDAO{
 		update("invino.updatePuuId",map);
 		
 	}
+	public void userGameData(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		insert("invino.userGameData",map);
+		
+	}
+	
 
 	public List<Map<String, Object>> selectUserInfoIgnoreAfkTFT(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -75,5 +86,6 @@ public class ApiDAO extends AbstractDAO{
 		// TODO Auto-generated method stub
 		return (String) selectOne("invino_lolapi.select1");
 	}
-		
+
+
 }

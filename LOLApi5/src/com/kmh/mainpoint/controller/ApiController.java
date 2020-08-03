@@ -46,22 +46,25 @@ public class ApiController {
 		@RequestMapping(value="/invino/TEST.do")
 	    public ModelAndView TEST(Map<String,Object> commandMap) throws Exception{
 	    	ModelAndView mv = new ModelAndView("/invino/attendanceCheck");
-	    	
-	    	Map<String,Object> map = new HashMap<String, Object>();
-	    	
-	    	
-//	    	map.put("date",date);
-//	    	map.put("date2",date2);
-//	    	apiService.updateUserSearchDate(map);
-	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
-	    	
-	    	List<Map<String,Object>> Ignorelist = apiService.selectUserInfoIgnoreAfk(commandMap);
-	    	
-	    	List<Map<String,Object>> list3 = apiService.GetUserPuuId(Ignorelist);
-//	    	List<Map<String,Object>> list2 = apiService.attendanceCheckUser(Ignorelist,map);
+	    	String date_s = " 1998-12-18 00:00:00.0"; 
+	    	SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss"); 
+	    	Date date = dt.parse(date_s); 
+	    	SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-DD");
+	    	System.out.println(dt1.format(date));
 	    	
 	    	
-	    	mv.addObject("list", list);
+	    	
+	    	return mv;
+	    }
+
+		@RequestMapping(value="/invino/getData.do")
+	    public ModelAndView getLOLGameData(Map<String,Object> commandMap) throws Exception{
+	    	ModelAndView mv = new ModelAndView("/invino/attendanceCheck");
+//	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
+//	    	selectUserGameDate
+	    	
+	    	apiService.userGameData(commandMap);
+	    	
 	    	
 	    	return mv;
 	    }
@@ -75,6 +78,7 @@ public class ApiController {
 	    	map.put("date",date);
 	    	map.put("date2",date2);
 	    	apiService.updateUserSearchDate(map);
+	    	apiService.updateUserPlayCheck();
 	    	
 	    	List<Map<String,Object>> list = apiService.selectUserInfo(commandMap);
 	    	
@@ -84,8 +88,9 @@ public class ApiController {
 	    	apiService.GetUserAccountId(Ignorelist);
 	    	
 	    	apiService.GetUserPuuId(list);
-	    	
-//	    	apiService.attendanceCheckUser(Ignorelist,map);
+	    	System.out.println("controller");
+	    	System.out.println(Ignorelist);
+	    	apiService.attendanceCheckUser(Ignorelist,map);
 	    	 Ignorelist = apiService.selectUserInfoIgnoreAfkTFT(commandMap);
 	    	apiService.checkTFTPlay(Ignorelist,list,map);
 	    	

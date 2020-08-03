@@ -8,6 +8,7 @@
 <STYLE>
 TD,TH {
 	text-align : center;
+	border : 1px solid black;
 }
 </STYLE>
 </head>
